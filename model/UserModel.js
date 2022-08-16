@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt=require("bcrypt")
 
 const details = new mongoose.Schema({
   firstname: {
@@ -27,6 +28,18 @@ const details = new mongoose.Schema({
 // details.virtual("fullname").get(function () {
 //   return this.firstname + " " + this.lastname;
 // });
+
+details.pre("save",async function (next) {
+  if(this.isModified("password")){
+  const hashed=await bcrypt.hash(this.password,8)
+  this.password=hashed
+  }
+  next()
+})
+details.methods.comparepassword=async function(password){
+const compare=await bcrypt.compareSync(password,this.password)
+return compare
+}
 
 const Saveddetails = mongoose.model("SIGNUPDETAILS", details);
 

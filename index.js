@@ -23,9 +23,9 @@ app.use(
 // );
 dotenv.config({ path: ".env" });
 
-// const DATA = process.env.Database;
+const Port = process.env.port;
 const uri = process.env.MONGODB_URI;
-app.use("/", require("./routes/Router"));
+// app.use("/", require("./routes/Router"));
 
 app.get("/", (req,res) => {
   res.json("connected");
@@ -38,7 +38,7 @@ mongoose
   })
   .catch((error) => console.error(error));
 
-app.listen(10031, () => {
+app.listen(Port, () => {
   console.log("app is running");
 });
 
