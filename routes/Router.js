@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 const Tododocument = require("../controller/List");
-const Signed = require("../controller/signup");
+const Signed = require("../controller/Signup");
 const sentreviewsController = require("../controller/sentreviews");
 
 
