@@ -15,10 +15,11 @@ exports.Sign = async (req, res) => {
     });
 
     await TMZ.save();
-    return res.send({
+    res.send({
       message: "successfully created",
       TMZ,
     });
+    return;
   } catch (error) {
     res.json(error.message);
     console.log("errorz");
