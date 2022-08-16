@@ -21,7 +21,7 @@ exports.Sign = async (req, res) => {
     });
   } catch (error) {
     res.json(error.message);
-    console.log("error");
+    console.log("errorz");
   }
 };
 
