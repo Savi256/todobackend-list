@@ -23,7 +23,7 @@ app.use(
 // );
 dotenv.config({ path: ".env" });
 
-const Port = process.env.port;
+const Port = process.env.PORT;
 const uri = process.env.MONGODB_URI;
 // app.use("/", require("./routes/Router"));
 
