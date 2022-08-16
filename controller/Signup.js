@@ -1,5 +1,5 @@
 const Saveddetails = require("../model/UserModel");
-const bcrypt = require("bcrypt");
+// const bcrypt = require("bcrypt");
 
 // LETS CREATE A METHOD TO SIGNUP
 
