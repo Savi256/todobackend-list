@@ -4,14 +4,15 @@ const bcrypt = require("bcrypt");
 // LETS CREATE A METHOD TO SIGNUP
 
 exports.Sign = async (req, res) => {
-  const cryptpassword = await bcrypt.hash(req.body.password, 10);
+  // const cryptpassword = await bcrypt.hash(req.body.password, 10);
   try {
     const TMZ = new Saveddetails({
       firstname: req.body.firstname,
       lastname: req.body.lastname,
       email: req.body.email,
       number: req.body.number,
-      password: cryptpassword,
+      password: req.body.password,
+      // password: cryptpassword,
     });
 
     await TMZ.save();
