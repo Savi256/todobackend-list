@@ -23,7 +23,8 @@ app.use(
 // );
 dotenv.config({ path: ".env" });
 
-const DATA = process.env.Database;
+// const DATA = process.env.Database;
+const uri = process.env.MONGODB_URI;
 app.use("/", require("./routes/Router"));
 
 app.get("/", (req,res) => {
@@ -31,13 +32,13 @@ app.get("/", (req,res) => {
 });
 
 mongoose
-  .connect(DATA, { useUnifiedTopology: true, useNewUrlParser: true })
+  .connect(uri, { useUnifiedTopology: true, useNewUrlParser: true })
   .then((client) => {
     console.log("client connected");
   })
   .catch((error) => console.error(error));
 
-app.listen(3006, () => {
+app.listen(10031, () => {
   console.log("app is running");
 });
 
