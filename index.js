@@ -28,7 +28,7 @@ const uri = process.env.MONGODB_URI;
 // app.use("/", require("./routes/Router"));
 
 app.get("/", (req,res) => {
-  res.json("connected");
+  res.send("connected");
 });
 
 mongoose
