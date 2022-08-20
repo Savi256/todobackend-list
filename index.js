@@ -2,7 +2,7 @@
 const express = require("express");
 
 const nodemailer = require("nodemailer");
-const  mongoose = require("mongoose");
+const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 // const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -16,7 +16,7 @@ app.use(
     origin: "http://localhost:3000",
   })
 );
-// app.use(  
+// app.use(
 //   bodyParser.urlencoded({
 //     extended: true,
 //   })ss
@@ -27,7 +27,7 @@ const Port = process.env.PORT;
 const uri = process.env.MONGODB_URI;
 app.use("/", require("./routes/Router"));
 
-app.get("/", (req,res) => {
+app.get("/", (req, res) => {
   res.send("connected");
 });
 
