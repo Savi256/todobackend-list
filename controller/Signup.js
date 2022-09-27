@@ -1,6 +1,10 @@
 const Saveddetails = require("../model/UserModel");
-
+const verification = require("../model/verification");
+const { randomInt, randomBytes } = require("crypto");
+const { verifyemail } = require("../email/service");
+const { isValidObjectId } = require("mongoose");
 // LETS CREATE A METHOD TO SIGNUP
+const OTP = randomInt(10000, 99999);
 
 exports.Sign = async (req, res) => {
   try {
@@ -12,15 +16,22 @@ exports.Sign = async (req, res) => {
       password: req.body.password,
     });
 
+    const verify = new verification({
+      owner: TMZ._id,
+      token: OTP,
+    });
+    await verify.save(verify);
     await TMZ.save();
+    await verifyemail(TMZ.email,OTP);
+
     res.send({
-      message: "successfully created",
+      message: "An email has been sent to you please verify",
       TMZ,
     });
     return;
   } catch (error) {
     res.json(error.message);
-    console.log("errorz");
+    console.log(error.message);
   }
 };
 
@@ -42,7 +53,8 @@ exports.findUser = async (req, res) => {
       } else {
         res.send("wellcome");
       }
-      if (await bcrypt.compare(password, findTheUser.password)) {
+      const comparePassword = await findByUsername.comparepassword(password);
+      if (comparePassword) {
         res.json("valid password");
       } else {
         ("invalid password");
@@ -55,11 +67,48 @@ exports.findUser = async (req, res) => {
 
 //LET CREATE A METHOD OF VERIFYING THE USER
 
-exports.verifyUser=async(req,res)=>{
-  
+exports.verifyUser = async (req, res) => {
+  const otp = req.body.otp;
+  const userId = req.params.id;
   try {
-    
+    if (!userId || !otp) {
+      res.json("invalid request");
+      return;
+    }
+    if (!isValidObjectId(userId)) {
+      res.json("invalid id");
+      return;
+    }
+    const verifiedUserModel = await Saveddetails.findById(userId).lean();
+    if (!verifiedUserModel) {
+      res.json("user not found");
+    }
+    if (verifiedUserModel.verified) {
+      return res.json({
+        status: 500,
+        message: "USER FOUND",
+      });
+    }
+    const verifiedUsers = await verification.findOne({
+      owner: verifiedUserModel._id,
+      // token: otp, 
+    });
+    if (!verifiedUsers) {
+      res.json("user not found");
+    }
+    const matched = await verifiedUsers.compareToken(otp);
+    if (!matched) {
+      return res.json({
+        status: 500,
+        message: "...countdown...destruction imminent",
+      });
+    }
+    await Saveddetails.updateOne({ verified: true });
+
+    await verification.findByIdAndDelete(verifiedUsers._id);
+    res.json("successful verification");
   } catch (error) {
-    res.json(error.message)
+    res.json(error.message);
+    return
   }
-}
+};
