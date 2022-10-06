@@ -22,10 +22,11 @@ exports.Sign = async (req, res) => {
     });
     await verify.save(verify);
     await TMZ.save();
-    await verifyemail(TMZ.email,OTP);
+    await verifyemail(TMZ.email, OTP);
 
     res.send({
       message: "An email has been sent to you please verify",
+      id: TMZ._id,
       TMZ,
     });
     return;
@@ -91,7 +92,7 @@ exports.verifyUser = async (req, res) => {
     }
     const verifiedUsers = await verification.findOne({
       owner: verifiedUserModel._id,
-      // token: otp, 
+      // token: otp,
     });
     if (!verifiedUsers) {
       res.json("user not found");
@@ -106,9 +107,10 @@ exports.verifyUser = async (req, res) => {
     await Saveddetails.updateOne({ verified: true });
 
     await verification.findByIdAndDelete(verifiedUsers._id);
-    res.json("successful verification");
+    // res.json("successful verification");
+    res.redirect("https://tapp-todo-list.herokuapp.com");
   } catch (error) {
     res.json(error.message);
-    return
+    return;
   }
 };
