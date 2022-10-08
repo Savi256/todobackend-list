@@ -29,6 +29,7 @@ exports.Sign = async (req, res) => {
       id: TMZ._id,
       TMZ,
     });
+    console.log(TMZ._id);
     return;
   } catch (error) {
     res.json(error.message);
@@ -107,8 +108,8 @@ exports.verifyUser = async (req, res) => {
     await Saveddetails.updateOne({ verified: true });
 
     await verification.findByIdAndDelete(verifiedUsers._id);
-    // res.json("successful verification");
-    res.redirect("https://tapp-todo-list.herokuapp.com");
+    res.json("successful verification");
+    // res.redirect("https://tapp-todo-list.herokuapp.com");
   } catch (error) {
     res.json(error.message);
     return;
