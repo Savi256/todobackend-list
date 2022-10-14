@@ -1,4 +1,5 @@
 const express = require("express");
+const { protect } = require("../Middleware/auth");
 
 const router = express.Router();
 
@@ -8,8 +9,8 @@ const sentreviewsController = require("../controller/sentreviews");
 
 router.post("/create-signupdetails", Signed.Sign);
 router.post("/verifyUser/:id", Signed.verifyUser);
-router.get("/getlogin", Signed.findUser);
-router.post("/create-list", Tododocument.createTododocument);
+router.post("/getlogin", Signed.findUser);
+router.post("/create-list", protect, Tododocument.createTododocument);
 router.put("/update/:id", Tododocument.updatelist);
 router.get("/get-list", Tododocument.getTodolist);
 router.get("/getSpecific-list/:id", Tododocument.getspecificlist);

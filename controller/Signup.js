@@ -3,8 +3,9 @@ const verification = require("../model/verification");
 const { randomInt, randomBytes } = require("crypto");
 const { verifyemail } = require("../email/service");
 const { isValidObjectId } = require("mongoose");
+const generateToken = require("../config/Generatetoken");
 // LETS CREATE A METHOD TO SIGNUP
-const OTP = randomInt(10000, 99999);
+const OTP = randomInt(10000, 90000);
 
 exports.Sign = async (req, res) => {
   try {
@@ -12,7 +13,6 @@ exports.Sign = async (req, res) => {
       firstname: req.body.firstname,
       lastname: req.body.lastname,
       email: req.body.email,
-      number: req.body.number,
       password: req.body.password,
     });
 
@@ -28,6 +28,7 @@ exports.Sign = async (req, res) => {
       message: "An email has been sent to you please verify",
       id: TMZ._id,
       TMZ,
+      token: generateToken(TMZ._id),
     });
     console.log(TMZ._id);
     return;
@@ -40,28 +41,30 @@ exports.Sign = async (req, res) => {
 //LETS CREATE A METHOD TO FIND /LOGIN THE CREATED USER
 
 exports.findUser = async (req, res) => {
-  const id = req.params.id;
-  const { username, password, email } = req.body;
+  // const id = req.params.id;
+  const { password, email } = req.body;
   try {
-    const findTheUser = await Saveddetails.findById(id).lean();
-    if (!findTheUser) {
-      res.json("invalid user");
-    } else {
-      res.json({ status: 200, message: "Found" });
-
-      const findByUsername = await Saveddetails.findOne({ email, username });
-      if (!findByUsername) {
-        res.send("invalid username");
-      } else {
-        res.send("wellcome");
-      }
-      const comparePassword = await findByUsername.comparepassword(password);
-      if (comparePassword) {
-        res.json("valid password");
-      } else {
-        ("invalid password");
-      }
+    // const findTheUser = await Saveddetails.findById(id).lean();
+    // if (!findTheUser) {
+    //   res.json("invalid user");
+    // } else {
+    //   res.json({ status: 200, message: "Found" });
+    // }
+    const findByUsername = await Saveddetails.findOne({ email });
+    if (!findByUsername) {
+      res.send("invalid username");
+      return;
     }
+    const comparePassword = await findByUsername.comparepassword(password);
+    if (!comparePassword) {
+      res.json("invalid password");
+    } else {
+      res.json({
+        message: findByUsername,
+        token: generateToken(findByUsername._id),
+      });
+    }
+    return;
   } catch (error) {
     res.json(error.message);
   }

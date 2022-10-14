@@ -15,10 +15,6 @@ const details = new mongoose.Schema({
     // unique: true,
     required: true,
   },
-  number: {
-    type: Number,
-    required: true,
-  },
   password: {
     type: String,
     required: true,
