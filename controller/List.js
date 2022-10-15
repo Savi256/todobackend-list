@@ -24,7 +24,9 @@ console.log(customlist.owner)
 
 exports.getTodolist = async (req, res) => {
   try {
-    const user = await Tododocument.find({});
+    const user = await Tododocument.find({
+      owner:req.user
+    });
     // .exec((err,bit)=>{
     //   bit.timeda()
     // });
@@ -42,6 +44,7 @@ exports.getTodolist = async (req, res) => {
       display: user,
       user: user.reverse().slice(0, 3),
       message: user.length,
+      
     });
   } catch (error) {
     res.json(error.message);

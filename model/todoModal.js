@@ -14,6 +14,10 @@ const model = new mongoose.Schema({
     type: String,
     default: moment().toISOString(),
   },
+  // date:{
+  //   type:String,
+  //   default:moment.toString()
+  // },
   lastseen:{
 type:String
   }
