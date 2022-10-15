@@ -25,7 +25,7 @@ console.log(customlist.owner)
 exports.getTodolist = async (req, res) => {
   try {
     const user = await Tododocument.find({
-      owner:req.user
+      // owner:req.user
     });
     // .exec((err,bit)=>{
     //   bit.timeda()

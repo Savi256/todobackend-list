@@ -3,10 +3,10 @@ const moment = require("moment");
 const mongoose = require("mongoose");
 
 const model = new mongoose.Schema({
-  owner:{
-    type:mongoose.Schema.Types.ObjectId,
-    ref:"SIGNUPDETAILS"
-  },
+  // owner:{
+  //   type:mongoose.Schema.Types.ObjectId,
+  //   ref:"SIGNUPDETAILS"
+  // },
   list: {
     type: String,
   },
