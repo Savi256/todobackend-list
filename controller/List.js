@@ -3,7 +3,6 @@ const Tododocument = require("../model/todoModal");
 exports.createTododocument = (req, res) => {
   try {
     const customlist = new Tododocument({
-      owner: req.user._id,
       list: req.body.list,
     });
 console.log(customlist.owner)
