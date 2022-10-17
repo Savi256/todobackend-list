@@ -5,7 +5,7 @@ exports.createTododocument = (req, res) => {
     const customlist = new Tododocument({
       list: req.body.list,
     });
-console.log(customlist.owner)
+// console.log(customlist.owner)
     customlist.save(customlist);
     console.log(customlist);
 
