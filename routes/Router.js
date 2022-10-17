@@ -10,7 +10,7 @@ const sentreviewsController = require("../controller/sentreviews");
 router.post("/create-signupdetails", Signed.Sign);
 router.post("/verifyUser/:id", Signed.verifyUser);
 router.post("/getlogin", Signed.findUser);
-router.post("/create-list", Tododocument.createTododocument);
+router.post("/create-list",protect, Tododocument.createTododocument);
 router.put("/update/:id",protect, Tododocument.updatelist);
 router.get("/get-list",protect, Tododocument.getTodolist);
 router.get("/getSpecific-list/:id",protect, Tododocument.getspecificlist);
