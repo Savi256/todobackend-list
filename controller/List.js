@@ -3,6 +3,8 @@ const Tododocument = require("../model/todoModal");
 exports.createTododocument = (req, res) => {
   try {
     const customlist = new Tododocument({
+      owner:req.user.id,
+      title:req.body.title,
       list: req.body.list,
     });
 // console.log(customlist.owner)
@@ -24,7 +26,7 @@ exports.createTododocument = (req, res) => {
 exports.getTodolist = async (req, res) => {
   try {
     const user = await Tododocument.find({
-      // owner:req.user
+      owner:req.user
     });
     // .exec((err,bit)=>{
     //   bit.timeda()
