@@ -11,7 +11,7 @@ router.post("/create-signupdetails", Signed.Sign);
 router.post("/verifyUser/:id", Signed.verifyUser);
 router.get("/verify/:id", Signed.find);
 router.post("/getlogin", Signed.findUser);
-router.post("/create-list", protect, Tododocument.createTododocument);
+router.post("/create-list", Tododocument.createTododocument);
 router.put("/update/:id", Tododocument.updatelist);
 router.get("/get-list", Tododocument.getTodolist);
 router.get("/getSpecific-list/:id", Tododocument.getspecificlist);
