@@ -26,8 +26,8 @@ exports.Sign = async (req, res) => {
 
     res.send({
       message: "An email has been sent to you please verify",
-      id: TMZ._id,
-      TMZ,
+      id : TMZ._id,
+      TMZ: TMZ,
       token: generateToken(TMZ._id),
     });
     console.log(TMZ._id);
@@ -40,8 +40,22 @@ exports.Sign = async (req, res) => {
 
 //LETS CREATE A METHOD TO FIND /LOGIN THE CREATED USER
 
+exports.find = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const findTheUser = await Saveddetails.findById(id).lean();
+    if (!findTheUser) {
+      res.json("invalid user");
+    } else {
+      res.json({ status: 200, message: findTheUser });
+    }
+    return;
+  } catch (error) {
+    res.json(error.message);
+  }
+};
 exports.findUser = async (req, res) => {
-  // const id = req.params.id;
+  const id = req.params.id;
   const { password, email } = req.body;
   try {
     // const findTheUser = await Saveddetails.findById(id).lean();

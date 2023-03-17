@@ -3,12 +3,12 @@ const moment = require("moment");
 const mongoose = require("mongoose");
 
 const model = new mongoose.Schema({
-  owner:{
-    type:mongoose.Schema.Types.ObjectId,
-    ref:"SIGNUPDETAILS"
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "SIGNUPDETAILS",
   },
-  title:{
-    type:String,
+  title: {
+    type: String,
   },
   Note: {
     type: String,
@@ -21,13 +21,13 @@ const model = new mongoose.Schema({
   //   type:String,
   //   default:moment.toString()
   // },
-  lastseen:{
-type:String
-  }
+  lastseen: {
+    type: String,
+  },
 });
 model.methods.timeda = function () {
-    const m2=moment()
-    const m1_m2=moment.duration(m2.diff(this.timestamp)).humanize()
+  const m2 = moment();
+  const m1_m2 = moment.duration(m2.diff(this.timestamp)).humanize();
   return `${m1_m2} ago`;
 };
 // scheme.pre("save", async function (next) {

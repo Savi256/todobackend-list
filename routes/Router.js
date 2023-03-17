@@ -9,12 +9,13 @@ const sentreviewsController = require("../controller/sentreviews");
 
 router.post("/create-signupdetails", Signed.Sign);
 router.post("/verifyUser/:id", Signed.verifyUser);
-router.post("/getlogin", protect, Signed.findUser);
+router.get("/verify/:id", Signed.find);
+router.post("/getlogin", Signed.findUser);
 router.post("/create-list", protect, Tododocument.createTododocument);
-router.put("/update/:id", protect, Tododocument.updatelist);
-router.get("/get-list", protect, Tododocument.getTodolist);
-router.get("/getSpecific-list/:id", protect, Tododocument.getspecificlist);
-router.delete("/delete-list/:id", protect, Tododocument.deletefromlist);
+router.put("/update/:id", Tododocument.updatelist);
+router.get("/get-list", Tododocument.getTodolist);
+router.get("/getSpecific-list/:id", Tododocument.getspecificlist);
+router.delete("/delete-list/:id", Tododocument.deletefromlist);
 router.post("/create", sentreviewsController.sender);
 
 module.exports = router;

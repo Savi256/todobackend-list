@@ -3,11 +3,11 @@ const Tododocument = require("../model/todoModal");
 exports.createTododocument = (req, res) => {
   try {
     const customlist = new Tododocument({
-      owner:req.user.id,
-      title:req.body.title,
-      list: req.body.list,
+      // owner:req.user.id,
+      title: req.body.title,
+      Note: req.body.Note,
     });
-// console.log(customlist.owner)
+    // console.log(customlist.owner)
     customlist.save(customlist);
     console.log(customlist);
 
@@ -26,7 +26,7 @@ exports.createTododocument = (req, res) => {
 exports.getTodolist = async (req, res) => {
   try {
     const user = await Tododocument.find({
-      owner:req.user
+      owner: req.user,
     });
     // .exec((err,bit)=>{
     //   bit.timeda()
@@ -45,7 +45,6 @@ exports.getTodolist = async (req, res) => {
       display: user,
       user: user.reverse().slice(0, 3),
       message: user.length,
-      
     });
   } catch (error) {
     res.json(error.message);
